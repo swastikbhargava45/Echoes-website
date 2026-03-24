@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echoes Café | Where Silence Speaks</title>
+    <title>Echoes Living Room | Where Silence Speaks</title>
+    <meta name="description" content="A unique café in Bhopal run by deaf & mute staff. Experience food and connection beyond words.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --bg-main: #0a0a0a;
             --bg-card: #151515;
+            --bg-card-hover: #1e1e1e;
             --gold: #D4AF37;
             --gold-hover: #b5952f;
             --text-main: #f5f5f5;
@@ -24,80 +28,116 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
+        body { font-family: var(--font-body); background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; color: var(--text-main); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .section-padding { padding: 100px 0; }
         .text-center { text-align: center; }
         .gold-text { color: var(--gold); }
 
-        /* Navbar */
-        .navbar { position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--gold); text-decoration: none; }
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
-        /* Hero - USING YOUR IMAGE */
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; font-size: 1rem; font-weight: 500; border-radius: 4px; cursor: pointer; transition: var(--transition); font-family: var(--font-body); gap: 10px; }
+        .btn-primary { background-color: var(--gold); color: #000; border: 2px solid var(--gold); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+        .btn-outline { background-color: transparent; color: var(--gold); border: 2px solid var(--gold); }
+        .btn-outline:hover { background-color: var(--gold); color: #000; transform: translateY(-2px); }
+
+        /* Navbar */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 0; z-index: 1000; transition: var(--transition); }
+        .navbar.scrolled { background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px); padding: 15px 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a:hover { color: var(--gold); }
+        .mobile-toggle { display: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+
+        /* Hero Section - UPDATED WITH YOUR IMAGE */
         .hero {
+            position: relative;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('file_00000000e5547208bf39fd0e61a53f1c.png') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.85)), url('file_00000000e5547208bf39fd0e61a53f1c.png') center/cover no-repeat;
         }
-        .hero-content { max-width: 800px; }
-        .hero h1 { font-size: clamp(3rem, 10vw, 5rem); line-height: 1.1; margin-bottom: 20px; }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; padding: 0 20px; }
+        .trust-badge { display: inline-block; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: var(--gold); padding: 8px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 500; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
         .hero p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 40px; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
-        /* Buttons */
-        .btn { display: inline-flex; align-items: center; padding: 14px 28px; border-radius: 4px; font-weight: 600; text-decoration: none; transition: var(--transition); gap: 10px; cursor: pointer; }
-        .btn-primary { background: var(--gold); color: #000; }
-        .btn-outline { border: 2px solid var(--gold); color: var(--gold); }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
-
-        /* Story Grid */
+        /* Story Section - UPDATED WITH YOUR TEXT */
         .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .story-image img { width: 100%; border-radius: 8px; border: 1px solid var(--gold); }
+        .story-image { position: relative; border-radius: 8px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.2); }
+        .story-image img { width: 100%; border-radius: 8px; }
+        .story-content h2 { font-size: 2.5rem; margin-bottom: 25px; color: var(--gold); }
+        .story-content p { color: var(--text-muted); margin-bottom: 20px; font-size: 1.1rem; }
 
         /* Menu Section */
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .menu-item { background: var(--bg-card); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .menu-item { background-color: var(--bg-card); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: var(--transition); }
+        .menu-item:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.2); }
         .menu-content { padding: 25px; }
         .menu-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .whatsapp-btn { width: 100%; padding: 12px; background: #25D366; color: #fff; text-decoration: none; display: block; text-align: center; border-radius: 4px; font-weight: 600; margin-top: 20px; }
+        .menu-price { color: var(--gold); font-weight: 600; }
+        .menu-btn { width: 100%; padding: 12px; background: #25D366; color: #fff; border-radius: 4px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: 600; margin-top: 20px; }
 
-        /* Reviews */
+        /* Reviews Section */
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .review-card { background: var(--bg-card); padding: 30px; border-radius: 8px; border-left: 3px solid var(--gold); }
+        .review-card { background-color: var(--bg-card); padding: 30px; border-radius: 8px; border-left: 3px solid var(--gold); }
+        .stars { color: var(--gold); margin-bottom: 15px; font-size: 0.9rem; }
 
-        /* Franchise Section */
-        .franchise-box { max-width: 700px; margin: 0 auto; padding: 50px; border: 1px dashed var(--gold); border-radius: 8px; text-align: center; }
+        /* Franchise & CTA */
+        .cta-section { background: linear-gradient(rgba(10,10,10,0.85), rgba(10,10,10,0.95)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=2070') center/cover fixed; text-align: center; padding: 100px 0; border-top: 1px solid rgba(212, 175, 55, 0.2); }
+        .franchise-box { max-width: 700px; margin: 0 auto; padding: 50px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 8px; text-align: center; background: #050505; }
 
-        footer { background: #000; padding: 60px 0; text-align: center; border-top: 1px solid #222; }
+        footer { background-color: #000; padding: 60px 0; border-top: 1px solid #222; text-align: center; color: var(--text-muted); }
+
+        /* Animations */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 768px) {
+            .nav-links { position: fixed; top: 70px; left: -100%; width: 100%; height: calc(100vh - 70px); background-color: #0a0a0a; flex-direction: column; align-items: center; justify-content: center; transition: 0.4s; }
+            .nav-links.active { left: 0; }
+            .mobile-toggle { display: block; }
             .story-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">Echoes</a>
-            <div style="color: var(--gold); font-size: 0.9rem;">Bhopal, India</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
+                <a href="#story">Our Story</a>
+                <a href="#menu">Menu</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></div>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="container hero-content">
-            <div style="background: rgba(212,175,55,0.1); display: inline-block; padding: 5px 15px; border-radius: 20px; color: var(--gold); margin-bottom: 20px; font-size: 0.8rem; font-weight: 600;">⭐ Rated 4.7 by 1000+ customers</div>
+    <section class="hero" id="home">
+        <div class="hero-content fade-up">
+            <span class="trust-badge"><i class="fas fa-star"></i> Rated 4.7 by 1000+ customers in Bhopal</span>
             <h1>Where Silence Speaks</h1>
             <p>A café where communication goes beyond words. Run by a team of deaf and mute staff, Echoes offers an experience that’s warm, unique, and truly memorable.</p>
-            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <div class="hero-buttons">
                 <a href="#menu" class="btn btn-primary">View Menu</a>
-                <a href="https://wa.me/919202784331?text=Hi%20Echoes%20Bhopal,%20I'd%20like%20to%20reserve%20a%20table." class="btn btn-outline"><i class="fab fa-whatsapp"></i> Reserve Now</a>
+                <a href="https://wa.me/919202784331?text=Hi%20Echoes%20Bhopal,%20I'd%20like%20to%20reserve%20a%20table." class="btn btn-outline" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Reserve on WhatsApp
+                </a>
             </div>
         </div>
     </section>
@@ -105,44 +145,45 @@
     <section class="section-padding" id="story">
         <div class="container">
             <div class="story-grid">
-                <div class="story-content">
-                    <h2 class="gold-text" style="font-size: 2.5rem; margin-bottom: 25px;">More Than Just a Café</h2>
-                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Run by a team of deaf and mute staff, Echoes offers an experience that’s warm, unique, and truly memorable.</p>
-                    <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px;">Every visit here is more than just food — it’s a connection. We believe that hospitality doesn't need a voice to be felt. From our custom order cards to the glowing lights at your table, every detail is designed for a seamless, meaningful human connection.</p>
+                <div class="story-content fade-up">
+                    <h4 class="gold-text" style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; margin-bottom: 10px;">The Philosophy</h4>
+                    <h2>More Than Just a Café</h2>
+                    <p>A café where communication goes beyond words. Run by a team of deaf and mute staff, Echoes offers an experience that’s warm, unique, and truly memorable.</p>
+                    <p>Every visit here is more than just food — it’s a connection. We invite you to experience hospitality in its purest form, where heart-led service creates an echo that lasts long after your meal.</p>
                 </div>
-                <div class="story-image">
-                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1000" alt="Cafe Interior">
+                <div class="story-image fade-up">
+                    <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=1000" alt="Authentic hospitality">
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section-padding" id="menu" style="background-color: #050505;">
+    <section class="section-padding" id="menu" style="background: #050505;">
         <div class="container">
-            <div class="text-center" style="margin-bottom: 60px;">
-                <h2 style="font-size: 2.5rem;">Our Favorites</h2>
-                <p class="text-muted">Handcrafted flavors delivered with a smile.</p>
+            <div class="section-header fade-up">
+                <h2>Our Signature Menu</h2>
+                <p>Fusion flavors prepared with love and served with a smile.</p>
             </div>
             <div class="menu-grid">
-                <div class="menu-item">
+                <div class="menu-item fade-up">
                     <div class="menu-content">
-                        <div class="menu-header"><h3>Echoes Special Burger</h3><span class="gold-text">₹249</span></div>
-                        <p class="text-muted">Our signature veg fusion burger with spicy mayo.</p>
-                        <a href="https://wa.me/919202784331?text=Order:%20Special%20Burger" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                        <div class="menu-header"><h3>Special Burger</h3><span class="menu-price">₹249</span></div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Veg fusion burger with jalapeño cheese dip.</p>
+                        <a href="https://wa.me/919202784331?text=I'd%20like%20to%20order%20the%20Special%20Burger" class="menu-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
                     </div>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item fade-up">
                     <div class="menu-content">
-                        <div class="menu-header"><h3>Cheese Burst Dosa</h3><span class="gold-text">₹199</span></div>
-                        <p class="text-muted">Classic South Indian with a modern cheesy twist.</p>
-                        <a href="https://wa.me/919202784331?text=Order:%20Cheese%20Dosa" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                        <div class="menu-header"><h3>Cheese Burst Dosa</h3><span class="menu-price">₹199</span></div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Classic South Indian with a rich cheesy twist.</p>
+                        <a href="https://wa.me/919202784331?text=I'd%20like%20to%20order%20the%20Cheese%20Burst%20Dosa" class="menu-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
                     </div>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item fade-up">
                     <div class="menu-content">
-                        <div class="menu-header"><h3>Hazelnut Frappé</h3><span class="gold-text">₹180</span></div>
-                        <p class="text-muted">Cold, creamy, and perfectly brewed espresso blend.</p>
-                        <a href="https://wa.me/919202784331?text=Order:%20Hazelnut%20Frappe" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                        <div class="menu-header"><h3>Hazelnut Frappé</h3><span class="menu-price">₹180</span></div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Cold, creamy espresso blend with hazelnut syrup.</p>
+                        <a href="https://wa.me/919202784331?text=I'd%20like%20to%20order%20the%20Hazelnut%20Frappe" class="menu-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
                     </div>
                 </div>
             </div>
@@ -151,29 +192,9 @@
 
     <section class="section-padding">
         <div class="container">
-            <h2 class="text-center" style="margin-bottom: 50px;">Bhopal Loves Echoes</h2>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <p style="font-style: italic; margin-bottom: 15px;">"The most peaceful and meaningful dining experience in Bhopal. The staff is incredible."</p>
-                    <h4 class="gold-text">— Priya S.</h4>
-                </div>
-                <div class="review-card">
-                    <p style="font-style: italic; margin-bottom: 15px;">"Loved the concept! Ordering is so interactive and the food is delicious."</p>
-                    <h4 class="gold-text">— Rahul V.</h4>
-                </div>
-                <div class="review-card">
-                    <p style="font-style: italic; margin-bottom: 15px;">"A must-visit. It's beautiful to see how they've built such a strong team."</p>
-                    <h4 class="gold-text">— Anjali D.</h4>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding">
-        <div class="container">
-            <div class="franchise-box">
-                <h2 class="gold-text">Grow With Us</h2>
-                <p style="margin: 20px 0;">Interested in collaborating or bringing Echoes Café to your city?</p>
+            <div class="franchise-box fade-up">
+                <h2 class="gold-text">Join the Echoes Vision</h2>
+                <p style="margin: 20px 0; color: var(--text-muted);">Interested in collaborating or bringing Echoes Café to your city?</p>
                 <a href="https://wa.me/919202784331?text=Hi,%20I'm%20interested%20in%20Franchise%20opportunities." class="btn btn-outline">Franchise Inquiry</a>
             </div>
         </div>
@@ -181,12 +202,34 @@
 
     <footer>
         <div class="container">
-            <h2 class="gold-text" style="margin-bottom: 15px;">Echoes Living Room</h2>
-            <p>10 No. Market, Bhopal, MP</p>
-            <p>WhatsApp: +91 92027 84331</p>
-            <div style="margin-top: 30px; font-size: 0.8rem; color: #444;">&copy; 2026 Echoes Café. Production Ready Demo.</div>
+            <h3 class="gold-text" style="margin-bottom: 10px;">Echoes Café Bhopal</h3>
+            <p>10 No. Market, Arera Colony, MP | +91 92027 84331</p>
+            <p style="margin-top: 20px; font-size: 0.8rem;">&copy; 2026 Echoes Café. All rights reserved.</p>
         </div>
     </footer>
 
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileToggle.querySelector('i').classList.toggle('fa-bars');
+            mobileToggle.querySelector('i').classList.toggle('fa-times');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
